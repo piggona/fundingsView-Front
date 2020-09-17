@@ -86,17 +86,17 @@
             </div>
             <!-- 基金金额排序部分 -->
             <div class="part">
-              <a-card title="基金投资排名">
+              <a-card title="基金投资趋势">
                 <div class="table-operations">
                   <a-button
                     :class="activeAmount ? 'fund-choose active' : 'fund-choose'"
                     @click="activeAmount = true"
-                    >金额排序</a-button
+                    >产业投资金额排名</a-button
                   >
                   <a-button
                     :class="!activeAmount ? 'fund-choose active' : 'fund-choose'"
                     @click="activeAmount = false"
-                    >增长率排序</a-button
+                    >产业增长率排名</a-button
                   >
                 </div>
                 <div class="search-result row col-md-10" id="fund-result">

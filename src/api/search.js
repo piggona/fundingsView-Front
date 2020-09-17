@@ -324,8 +324,16 @@ export default {
       let cloud = JSON.parse(JSON.stringify(resCloud))
 
       pie.legend.data = res.resPie.legend
-      pie.series[0].data = res.resPie.series
-
+      let series = res.resPie.series
+      series.map(x=> {
+        let name = x.key
+        x.tooltip = {
+          trigger: 'item',
+          formatter: `{a} <br/>{b} : ${name}<br/>Value: {c} ({d}%)`
+        }
+      })
+      pie.series[0].data = series
+      
       cloud.series[0].data = res.resCloud.data
 
       cloud.series[0].textStyle.normal.color = function() {

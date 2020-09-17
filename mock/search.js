@@ -6,7 +6,7 @@ function search(method, param) {
         tot_res: 120,
         data: [
           {
-            key: "1",
+            amount: "100",
             id: "1",
             uuid: "BUPT rev",
             title: "北邮奖学金",
@@ -14,7 +14,7 @@ function search(method, param) {
             end: "2019-01-01"
           },
           {
-            key: "2",
+            amount: "200",
             id: "2",
             uuid: "PKU rev",
             title: "北大计算机学院奖学金",
@@ -22,7 +22,7 @@ function search(method, param) {
             end: "2019-02-01"
           },
           {
-            key: "3",
+            amount: "300",
             id: "3",
             uuid: "THU rev",
             title: "清华工程系奖学金",
@@ -42,18 +42,18 @@ function search(method, param) {
           },
           resPie: {
             legend: [
-              "Medication",
-              "Computer Engineering",
-              "Geograph",
-              "Art",
-              "Math"
+              "12345",
+              "6789",
+              "123",
+              "143545",
+              "54645"
             ],
             series: [
-              { value: 335, name: "Computer Engineering" },
-              { value: 310, name: "Medication" },
-              { value: 234, name: "Geograph" },
-              { value: 135, name: "Art" },
-              { value: 1548, name: "Math" }
+              { value: 335, key: "Computer Engineering",name: "12345" },
+              { value: 310, key: "Medication",name: "6789" },
+              { value: 234, key: "Geograph",name: "123"},
+              { value: 135, key: "Art",name: "143545" },
+              { value: 1548, key: "Math",name: "54645" }
             ],
           },
           resCloud: {
