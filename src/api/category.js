@@ -3,7 +3,7 @@ import echarts from "echarts";
 
 var titleData = {
   Title: "",
-  AbstractNarration: "",
+  AbstractNarration: ""
 };
 
 var resCategory = {
@@ -19,8 +19,7 @@ var resCategory = {
       }
     },
     toolbox: {
-      show: true,
-      
+      show: true
     },
     calculable: true,
     legend: {
@@ -36,8 +35,7 @@ var resCategory = {
     xAxis: [
       {
         type: "category",
-        data: [
-        ]
+        data: []
         // data: []
       }
     ],
@@ -101,7 +99,7 @@ var resCategory = {
 
 var resTech = {
   dataOne: {
-    color: ["#3398DB","#F7DC6F","#7FB3D5","#E59866","#566573"],
+    color: ["#3398DB", "#F7DC6F", "#7FB3D5", "#E59866", "#566573"],
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -112,8 +110,7 @@ var resTech = {
       }
     },
     toolbox: {
-      show: true,
-      
+      show: true
     },
     calculable: true,
     legend: {
@@ -186,37 +183,35 @@ var resTech = {
         left: "93%"
       }
     ],
-    series: [
-    ]
+    series: []
   },
   dataTwo: {
     tooltip: {
-        trigger: 'axis'
+      trigger: "axis"
     },
     legend: {
-        data: []
+      data: []
     },
     grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
     },
     toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
+      feature: {
+        saveAsImage: {}
+      }
     },
     xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: []
+      type: "category",
+      boundaryGap: false,
+      data: []
     },
     yAxis: {
-        type: 'value'
+      type: "value"
     },
-    series: [
-    ]
+    series: []
   },
   ranklist: [
     {
@@ -236,7 +231,7 @@ var resTech = {
 
 var resOrg = {
   dataOne: {
-    color: ["#3398DB","#F7DC6F","#7FB3D5","#E59866","#566573"],
+    color: ["#3398DB", "#F7DC6F", "#7FB3D5", "#E59866", "#566573"],
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -247,8 +242,7 @@ var resOrg = {
       }
     },
     toolbox: {
-      show: true,
-      
+      show: true
     },
     calculable: true,
     legend: {
@@ -321,37 +315,35 @@ var resOrg = {
         left: "93%"
       }
     ],
-    series: [
-    ]
+    series: []
   },
   dataTwo: {
     tooltip: {
-        trigger: 'axis'
+      trigger: "axis"
     },
     legend: {
-        data: []
+      data: []
     },
     grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
     },
     toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
+      feature: {
+        saveAsImage: {}
+      }
     },
     xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: []
+      type: "category",
+      boundaryGap: false,
+      data: []
     },
     yAxis: {
-        type: 'value'
+      type: "value"
     },
-    series: [
-    ]
+    series: []
   },
   ranklist: [
     {
@@ -371,7 +363,7 @@ var resOrg = {
 
 var resIndustry = {
   dataOne: {
-    color: ["#3398DB","#F7DC6F","#7FB3D5","#E59866","#566573"],
+    color: ["#3398DB", "#F7DC6F", "#7FB3D5", "#E59866", "#566573"],
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -382,8 +374,7 @@ var resIndustry = {
       }
     },
     toolbox: {
-      show: true,
-      
+      show: true
     },
     calculable: true,
     legend: {
@@ -456,37 +447,35 @@ var resIndustry = {
         left: "93%"
       }
     ],
-    series: [
-    ]
+    series: []
   },
   dataTwo: {
     tooltip: {
-        trigger: 'axis'
+      trigger: "axis"
     },
     legend: {
-        data: []
+      data: []
     },
     grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true
     },
     toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
+      feature: {
+        saveAsImage: {}
+      }
     },
     xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: []
+      type: "category",
+      boundaryGap: false,
+      data: []
     },
     yAxis: {
-        type: 'value'
+      type: "value"
     },
-    series: [
-    ]
+    series: []
   },
   ranklist: [
     {
@@ -511,151 +500,152 @@ export default {
       url: "api/category/detail/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data;
+      let res = response.data.data;
       res = $.extend(true, titleData, res);
+      res.Title = res.title;
       cb(res);
     });
   },
   getResCategory(cb, uuid) {
     request({
-      url: "api/category/resfish/"+uuid,
+      url: "api/category/resfish/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data;
+      let res = response.data.data;
       resCategory["ranklist"] = res["ranklist"];
-      resCategory.data.xAxis[0].data=[]
-      resCategory.data.series[0].data = []
+      resCategory.data.xAxis[0].data = [];
+      resCategory.data.series[0].data = [];
       res.ranklist.map(x => {
-        resCategory.data.xAxis[0].data.push(x.title)
-        resCategory.data.series[0].data.push(x.date)
-      })
+        resCategory.data.xAxis[0].data.push(x.title);
+        resCategory.data.series[0].data.push(x.date);
+      });
       cb(resCategory);
-    })
+    });
   },
-  getResTech(cb,uuid) {
+  getResTech(cb, uuid) {
     request({
-      url: "api/category/restech/"+uuid,
+      url: "api/category/restech/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data;
+      let res = response.data.data;
       let barData = {
         name: "01",
         type: "bar",
         data: []
         // data: []
-      }
+      };
       let seriesData = {
-        name: '基金',
-        type: 'line',
-        stack: '总量',
+        name: "基金",
+        type: "line",
+        stack: "总量",
         data: []
-      }
+      };
       resTech.dataOne.xAxis[0].data = res.dataOne.xAxis;
-      resTech.dataOne.legend.data=[]
-      resTech.dataOne.series=[]
+      resTech.dataOne.legend.data = [];
+      resTech.dataOne.series = [];
       res.dataOne.data.map(x => {
         let dat = JSON.parse(JSON.stringify(barData));
         dat.name = x.name;
         dat.data = x.data;
         resTech.dataOne.legend.data.push(dat.name);
-        resTech.dataOne.series.push(dat)
-      })
+        resTech.dataOne.series.push(dat);
+      });
       resTech.dataTwo.xAxis.data = res.dataTwo.xAxis;
-      resTech.dataTwo.legend.data=[]
-      resTech.dataTwo.series=[]
+      resTech.dataTwo.legend.data = [];
+      resTech.dataTwo.series = [];
       res.dataTwo.data.map(x => {
         let dat = JSON.parse(JSON.stringify(seriesData));
         dat.name = x.name;
         dat.data = x.data;
-        resTech.dataTwo.legend.data.push(dat.name)
-        resTech.dataTwo.series.push(dat)
-      })
+        resTech.dataTwo.legend.data.push(dat.name);
+        resTech.dataTwo.series.push(dat);
+      });
       resTech["ranklist"] = res["ranklist"];
       cb(resTech);
-    })
+    });
   },
-  getResOrg(cb,uuid) {
+  getResOrg(cb, uuid) {
     request({
-      url: "api/category/resorg/"+uuid,
+      url: "api/category/resorg/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data;
+      let res = response.data.data;
       let barData = {
         name: "01",
         type: "bar",
         data: []
         // data: []
-      }
+      };
       let seriesData = {
-        name: '基金',
-        type: 'line',
-        stack: '总量',
+        name: "基金",
+        type: "line",
+        stack: "总量",
         data: []
-      }
+      };
       resOrg.dataOne.xAxis[0].data = res.dataOne.xAxis;
-      resOrg.dataOne.legend.data=[]
-      resOrg.dataOne.series=[]
+      resOrg.dataOne.legend.data = [];
+      resOrg.dataOne.series = [];
       res.dataOne.data.map(x => {
         let dat = JSON.parse(JSON.stringify(barData));
         dat.name = x.name;
         dat.data = x.data;
         resOrg.dataOne.legend.data.push(dat.name);
-        resOrg.dataOne.series.push(dat)
-      })
+        resOrg.dataOne.series.push(dat);
+      });
       resOrg.dataTwo.xAxis.data = res.dataTwo.xAxis;
-      resOrg.dataTwo.legend.data=[]
-      resOrg.dataTwo.series=[]
+      resOrg.dataTwo.legend.data = [];
+      resOrg.dataTwo.series = [];
       res.dataTwo.data.map(x => {
         let dat = JSON.parse(JSON.stringify(seriesData));
         dat.name = x.name;
         dat.data = x.data;
-        resOrg.dataTwo.legend.data.push(dat.name)
-        resOrg.dataTwo.series.push(dat)
-      })
+        resOrg.dataTwo.legend.data.push(dat.name);
+        resOrg.dataTwo.series.push(dat);
+      });
       resOrg["ranklist"] = res["ranklist"];
       cb(resOrg);
-    })
+    });
   },
-  getResIndustry(cb,uuid) {
+  getResIndustry(cb, uuid) {
     request({
-      url: "api/category/resindustry/"+uuid,
+      url: "api/category/resindu/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data;
+      let res = response.data.data;
       let barData = {
         name: "01",
         type: "bar",
         data: []
         // data: []
-      }
+      };
       let seriesData = {
-        name: '基金',
-        type: 'line',
-        stack: '总量',
+        name: "基金",
+        type: "line",
+        stack: "总量",
         data: []
-      }
+      };
       resIndustry.dataOne.xAxis[0].data = res.dataOne.xAxis;
-      resIndustry.dataOne.legend.data=[];
-      resIndustry.dataOne.series=[];
+      resIndustry.dataOne.legend.data = [];
+      resIndustry.dataOne.series = [];
       res.dataOne.data.map(x => {
         let dat = JSON.parse(JSON.stringify(barData));
         dat.name = x.name;
         dat.data = x.data;
         resIndustry.dataOne.legend.data.push(dat.name);
-        resIndustry.dataOne.series.push(dat)
-      })
+        resIndustry.dataOne.series.push(dat);
+      });
       resIndustry.dataTwo.xAxis.data = res.dataTwo.xAxis;
-      resIndustry.dataTwo.legend.data=[];
-      resIndustry.dataTwo.series=[];
+      resIndustry.dataTwo.legend.data = [];
+      resIndustry.dataTwo.series = [];
       res.dataTwo.data.map(x => {
         let dat = JSON.parse(JSON.stringify(seriesData));
         dat.name = x.name;
         dat.data = x.data;
-        resIndustry.dataTwo.legend.data.push(dat.name)
-        resIndustry.dataTwo.series.push(dat)
-      })
+        resIndustry.dataTwo.legend.data.push(dat.name);
+        resIndustry.dataTwo.series.push(dat);
+      });
       resIndustry["ranklist"] = res["ranklist"];
       cb(resIndustry);
-    })
+    });
   }
 };

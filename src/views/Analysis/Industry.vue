@@ -54,7 +54,6 @@
         :chartTwoTab="'投资趋势'"
       />
     </div>
-
   </div>
 </template>
 
@@ -77,12 +76,12 @@ export default {
     };
   },
   mounted() {
-    let uuid = this.uuid
-    this.$store.dispatch("industry/getTitle", uuid,);
-    this.$store.dispatch("industry/getResTech",uuid);
-    this.$store.dispatch("industry/getResCategory",uuid);
-    this.$store.dispatch("industry/getResOrg",uuid);
-    this.$store.dispatch("industry/getResIndustry",uuid);
+    let uuid = this.uuid;
+    this.$store.dispatch("industry/getTitle", uuid);
+    this.$store.dispatch("industry/getResTech", uuid);
+    this.$store.dispatch("industry/getResCategory", uuid);
+    this.$store.dispatch("industry/getResOrg", uuid);
+    this.$store.dispatch("industry/getResIndustry", uuid);
   },
   computed: {
     ...mapState({
@@ -101,7 +100,7 @@ export default {
         result = JSON.parse(JSON.stringify(this.resTech.ranklist));
         result.map(x => {
           x.href = "/analysis/tech?uuid=" + x.uuid;
-          x.date = "$ "+x.date;
+          x.date = "$ " + x.date;
         });
       }
       // console.log("tech list: ")
@@ -114,7 +113,7 @@ export default {
         result = JSON.parse(JSON.stringify(this.resCategory.ranklist));
         result.map(x => {
           x.href = "/analysis/category?uuid=" + x.uuid;
-          x.date = "$ "+x.date;
+          x.date = "$ " + x.date;
         });
       }
       // console.log("category list: ")
@@ -128,7 +127,7 @@ export default {
         result = JSON.parse(JSON.stringify(this.resOrg.ranklist));
         result.map(x => {
           x.href = "/analysis/org?uuid=" + x.uuid;
-          x.date = "$ "+x.date;
+          x.date = "$ " + x.date;
         });
       }
       return result;
@@ -139,15 +138,14 @@ export default {
         // console.log(JSON.stringify(this.resIndustry.ranklist));
         result = JSON.parse(JSON.stringify(this.resIndustry.ranklist));
         result.map(x => {
-          x.href = "/analysis/fundings?uuid=" + x.uuid;
-          x.date = "$ "+x.date;
+          x.href = "/analysis/fundings?fund=" + x.uuid;
+          x.date = "$ " + x.date;
         });
       }
       return result;
     }
   },
-  methods: {
-  },
+  methods: {},
   components: {
     TitleSimple,
     DetailedChart
@@ -229,6 +227,7 @@ export default {
 #detail-full {
   height: 38rem;
   overflow: auto;
+  width: 480px;
 }
 .patent-name {
   font-size: 2rem;

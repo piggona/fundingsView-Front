@@ -4,7 +4,8 @@ function fund(method, param) {
     case "GET":
       if (param.match("/detail/") !== null) {
         res = {
-          AwardTitle: "Unveiling the Enigmatic Biosynthetic Machinery of the Azinomycins",
+          AwardTitle:
+            "Unveiling the Enigmatic Biosynthetic Machinery of the Azinomycins",
           AbstractNarration: "Simple Abstract,摘要",
           Organization: {
             Directorate: {
@@ -18,7 +19,11 @@ function fund(method, param) {
             Code: "03090000"
           },
           AwardAmount: "387915",
-          Institution: [{ Name: "University of Pittsburgh1" }, { Name: "University of Pittsburgh2" }, { Name: "University of Pittsburgh3" }],
+          Institution: [
+            { Name: "University of Pittsburgh1" },
+            { Name: "University of Pittsburgh2" },
+            { Name: "University of Pittsburgh3" }
+          ],
           Investigator: [{ FullName: "Nathaniel" }, { FullName: "Rosi" }],
           ProgramElement: "Chemistry of Life Processes",
           description: "Detail Text，正式内容"
@@ -121,28 +126,28 @@ function fund(method, param) {
                           name: "产业", // First leaf of first tree
                           children: [
                             {
-                              name:"产业：医疗器械",
-                              value:20,
-                              type:"industry",
+                              name: "产业：医疗器械",
+                              value: 20,
+                              type: "industry",
                               uuid: "medical instruments"
                             },
                             {
-                              name:"产业：生物制药",
-                              value:20,
-                              type:"industry",
+                              name: "产业：生物制药",
+                              value: 20,
+                              type: "industry",
                               uuid: "biological medicine"
                             },
                             {
-                              name:"产业：生物工程",
-                              value:20,
-                              type:"industry",
+                              name: "产业：生物工程",
+                              value: 20,
+                              type: "industry",
                               uuid: "medicine engineering"
                             }
                           ]
                         },
                         {
                           name: "技术",
-                          value:40
+                          value: 40
                         },
                         {
                           name: "机构", // First leaf of first tree
@@ -160,7 +165,7 @@ function fund(method, param) {
                         },
                         {
                           name: "技术",
-                          value:40
+                          value: 40
                         },
                         {
                           name: "机构", // First leaf of first tree
@@ -202,28 +207,28 @@ function fund(method, param) {
                           name: "产业", // First leaf of first tree
                           children: [
                             {
-                              name:"产业：医疗器械",
-                              value:20,
-                              type:"industry",
+                              name: "产业：医疗器械",
+                              value: 20,
+                              type: "industry",
                               uuid: "medical instruments"
                             },
                             {
-                              name:"产业：生物制药",
-                              value:20,
-                              type:"industry",
+                              name: "产业：生物制药",
+                              value: 20,
+                              type: "industry",
                               uuid: "biological medicine"
                             },
                             {
-                              name:"产业：生物工程",
-                              value:20,
-                              type:"industry",
+                              name: "产业：生物工程",
+                              value: 20,
+                              type: "industry",
                               uuid: "medicine engineering"
                             }
                           ]
                         },
                         {
                           name: "技术",
-                          value:40
+                          value: 40
                         },
                         {
                           name: "机构", // First leaf of first tree
@@ -241,7 +246,7 @@ function fund(method, param) {
                         },
                         {
                           name: "技术",
-                          value:40
+                          value: 40
                         },
                         {
                           name: "机构", // First leaf of first tree
@@ -258,6 +263,7 @@ function fund(method, param) {
                 },
                 {
                   name: "机构", // First leaf of first tree
+                  type: "organization",
                   value: 80,
                   color: "#566573"
                 }
@@ -283,28 +289,28 @@ function fund(method, param) {
                           name: "产业", // First leaf of first tree
                           children: [
                             {
-                              name:"产业：医疗器械",
-                              value:20,
-                              type:"industry",
+                              name: "产业：医疗器械",
+                              value: 20,
+                              type: "industry",
                               uuid: "medical instruments"
                             },
                             {
-                              name:"产业：生物制药",
-                              value:20,
-                              type:"industry",
+                              name: "产业：生物制药",
+                              value: 20,
+                              type: "industry",
                               uuid: "biological medicine"
                             },
                             {
-                              name:"产业：生物工程",
-                              value:20,
-                              type:"industry",
+                              name: "产业：生物工程",
+                              value: 20,
+                              type: "industry",
                               uuid: "medicine engineering"
                             }
                           ]
                         },
                         {
                           name: "技术",
-                          value:40
+                          value: 40
                         },
                         {
                           name: "机构", // First leaf of first tree
@@ -322,7 +328,7 @@ function fund(method, param) {
                         },
                         {
                           name: "技术",
-                          value:40
+                          value: 40
                         },
                         {
                           name: "机构", // First leaf of first tree

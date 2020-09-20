@@ -45,7 +45,7 @@
               </div>
             </a-card>
           </div>
-          
+
           <!-- 第二部分 -->
           <div class="part" id="brief">
             <div class="part-title">基金概览</div>
@@ -75,10 +75,18 @@
                     :style="{ height: '100%' }"
                   >
                     <a-tab-pane tab="主分类资金分布" key="1">
-                      <Graph :ChartStyle="chartStyle" :option="resPie" :click_func="categoryFunc"/>
+                      <Graph
+                        :ChartStyle="chartStyle"
+                        :option="resPie"
+                        :click_func="categoryFunc"
+                      />
                     </a-tab-pane>
                     <a-tab-pane tab="热点产业词" key="2">
-                      <Graph :ChartStyle="chartStyle" :option="resCloud" :click_func="industryFunc"/>
+                      <Graph
+                        :ChartStyle="chartStyle"
+                        :option="resCloud"
+                        :click_func="industryFunc"
+                      />
                     </a-tab-pane>
                   </a-tabs>
                 </a-col>
@@ -94,7 +102,9 @@
                     >产业投资金额排名</a-button
                   >
                   <a-button
-                    :class="!activeAmount ? 'fund-choose active' : 'fund-choose'"
+                    :class="
+                      !activeAmount ? 'fund-choose active' : 'fund-choose'
+                    "
                     @click="activeAmount = false"
                     >产业增长率排名</a-button
                   >
@@ -117,11 +127,15 @@
                 @change="activeCallback"
               >
                 <a-tab-pane tab="主分类技术词" key="1">
-                  <a-input-search style="margin-bottom: 8px" placeholder="搜索技术词" @change="onChange" />
+                  <a-input-search
+                    style="margin-bottom: 8px"
+                    placeholder="搜索技术词"
+                    @change="onChange"
+                  />
                   <a-tree
                     :expanded-keys="expandedKeys"
                     :auto-expand-parent="autoExpandParent"
-                    :tree-data="treeNodes.data"
+                    :tree-data="treeNodes"
                     @expand="onExpand"
                   >
                     <template slot="title" slot-scope="{ title }">
@@ -129,7 +143,11 @@
                         <span v-if="title.indexOf(searchValue) > -1">
                           {{ title.substr(0, title.indexOf(searchValue)) }}
                           <span style="color: #f50">{{ searchValue }}</span>
-                          {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
+                          {{
+                            title.substr(
+                              title.indexOf(searchValue) + searchValue.length
+                            )
+                          }}
                         </span>
                         <span v-else>{{ title }}</span>
                       </span>
@@ -137,10 +155,14 @@
                   </a-tree>
                 </a-tab-pane>
                 <a-tab-pane tab="主分类产业词" key="2">
-                  <a-input-search style="margin-bottom: 8px" placeholder="搜索产业词" @change="onChange" />
+                  <a-input-search
+                    style="margin-bottom: 8px"
+                    placeholder="搜索产业词"
+                    @change="onChange"
+                  />
                   <a-tree
                     :expanded-keys="expandedKeys"
-                    :tree-data="treeNodes.data"
+                    :tree-data="treeNodes"
                     @expand="onExpand"
                   >
                     <template slot="title" slot-scope="{ title }">
@@ -148,7 +170,11 @@
                         <span v-if="title.indexOf(searchValue) > -1">
                           {{ title.substr(0, title.indexOf(searchValue)) }}
                           <span style="color: #f50">{{ searchValue }}</span>
-                          {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
+                          {{
+                            title.substr(
+                              title.indexOf(searchValue) + searchValue.length
+                            )
+                          }}
                         </span>
                         <span v-else>{{ title }}</span>
                       </span>
@@ -162,7 +188,6 @@
         </div>
       </a-col>
     </a-row>
-    
   </div>
 </template>
 
@@ -211,20 +236,20 @@ export default {
       top: 200,
       autoExpandParent: true,
       expandedKeys: [],
-      searchValue: '',
-      categoryFunc: function(params,_this){
+      searchValue: "",
+      categoryFunc: function(params, _this) {
         // console.log(params);
         _this.$router.push({
           path: "/analysis/category",
-          query: {uuid:params.name}
-        })
+          query: { uuid: params.name }
+        });
       },
-      industryFunc: function(params,_this){
+      industryFunc: function(params, _this) {
         // console.log(params);
         _this.$router.push({
           path: "/analysis/industry",
-          query: {uuid:params.name}
-        })
+          query: { uuid: params.name }
+        });
       }
     };
   },
@@ -248,9 +273,9 @@ export default {
     },
     activeCallback(key) {
       if (key === "1") {
-        this.$store.dispatch("search/setTech", "niques");
+        this.$store.dispatch("search/setTech", "tech");
       } else {
-        this.$store.dispatch("search/setTech", "industry");
+        this.$store.dispatch("search/setTech", "indu");
       }
     },
     onChange(e) {
@@ -258,7 +283,7 @@ export default {
       const expandedKeys = dataList
         .map(item => {
           if (item.title.indexOf(value) > -1) {
-            return getParentKey(item.key, this.treeNodes.data);
+            return getParentKey(item.key, this.treeNodes);
           }
           return null;
         })
@@ -266,7 +291,7 @@ export default {
       Object.assign(this, {
         expandedKeys,
         searchValue: value,
-        autoExpandParent: true,
+        autoExpandParent: true
       });
       // console.log("searchValue");
       // console.log(this.searchValue);
@@ -274,14 +299,14 @@ export default {
     toTech(uuid) {
       this.$router.push({
         path: "/analysis/tech",
-        query: {uuid:uuid}
-      })
+        query: { uuid: uuid }
+      });
     },
     toIndustry(uuid) {
       this.$router.push({
         path: "/analysis/industry",
-        query: {uuid:uuid}
-      })
+        query: { uuid: uuid }
+      });
     }
   },
   mounted() {
@@ -290,7 +315,7 @@ export default {
   watch: {
     treeNodes: {
       handler(val) {
-        generateList(val.data)
+        generateList(val);
       }
     },
     activeAmount: {
@@ -309,9 +334,9 @@ export default {
         // console.log(val);
         // // console.log("watch handler fund:", this.fund);
         if (val) {
-          this.$store.dispatch("search/setTech", "niques");
+          this.$store.dispatch("search/setTech", "tech");
         } else {
-          this.$store.dispatch("search/setTech", "industry");
+          this.$store.dispatch("search/setTech", "indu");
         }
       }
     }

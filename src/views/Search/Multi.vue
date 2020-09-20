@@ -67,12 +67,16 @@ export default {
     }
   },
   mounted() {
-    let searchphrase = { from: 0, size: 500, type: "basic", query: "" };
-    searchphrase.query = this.keyword;
+    let searchphrase = {
+      from: 0,
+      size: 500,
+      type: "basic",
+      query: [{ attr: "basic", query: this.keyword, logic: "and" }]
+    };
     // console.log("挂载值", searchphrase);
     // console.log("基础搜索词：", this.basic);
     this.$store.dispatch("search/initSearch", searchphrase);
-    this.$store.commit("search/setSearching",true);
+    this.$store.commit("search/setSearching", true);
     let val = this.keyword;
     let id = 0;
     // this.$store.commit("search/initQuery", this.pageType);

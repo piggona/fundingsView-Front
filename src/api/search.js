@@ -219,8 +219,7 @@ var resPie = {
   legend: {
     orient: "vertical",
     left: "left",
-    data: [
-    ]
+    data: []
   },
   series: [
     {
@@ -228,8 +227,7 @@ var resPie = {
       type: "pie",
       radius: "55%",
       center: ["50%", "60%"],
-      data: [
-      ],
+      data: [],
       itemStyle: {
         emphasis: {
           shadowBlur: 10,
@@ -239,9 +237,9 @@ var resPie = {
       }
     }
   ]
-}
+};
 
-var resCloud= {
+var resCloud = {
   title: {
     text: "热点产业词",
     //   subtext: "单位（USD）",
@@ -269,7 +267,7 @@ var resCloud= {
       data: []
     }
   ]
-}
+};
 
 function formatCurrency(num) {
   // num = num.toString().replace(/\$|\,/g,'');
@@ -288,53 +286,58 @@ function formatCurrency(num) {
 }
 
 function recurTree(tree) {
-  tree.map(x=> {
-    x.scopedSlots = {title: 'title'};
-    if (JSON.stringify(x.children) !== undefined) {
-      recurTree(x.children)
+  tree.map(x => {
+    x.scopedSlots = { title: "title" };
+    if (JSON.stringify(x.children) !== undefined && x.children !== null) {
+      recurTree(x.children);
     }
-  })
+    if (x.children === null) {
+      delete x.children;
+    }
+  });
 }
 
 export default {
-  getSearchResult(cb, searchPhrase,fin) {
+  getSearchResult(cb, searchPhrase, fin) {
     request({
-      url: "/api/fund/search/",
+      url: "api/search",
       method: "post",
       data: JSON.stringify(searchPhrase),
       headers: { "Content-Type": "application/json" }
-    }).then(response => {
-      let res = response.data;
-      res.data.map(x => {
-        let temp = x["amount"];
-        x["amount"] = formatCurrency(temp);
+    })
+      .then(response => {
+        let res = response.data.data;
+        res.data.map(x => {
+          let temp = x["amount"];
+          x["amount"] = formatCurrency(temp);
+        });
+        cb(res);
+      })
+      .finally(() => {
+        fin();
       });
-      cb(res);
-    }).finally(()=>{
-      fin()
-    });
   },
   getBasic(cb) {
     request({
-      url: "/api/basic/search/",
+      url: "api/search/basic",
       method: "get"
     }).then(response => {
-      let res = response.data;
-      let pie = JSON.parse(JSON.stringify(resPie))
-      let cloud = JSON.parse(JSON.stringify(resCloud))
+      let res = response.data.data;
+      let pie = JSON.parse(JSON.stringify(resPie));
+      let cloud = JSON.parse(JSON.stringify(resCloud));
 
-      pie.legend.data = res.resPie.legend
-      let series = res.resPie.series
-      series.map(x=> {
-        let name = x.key
+      pie.legend.data = res.resPie.legend;
+      let series = res.resPie.series;
+      series.map(x => {
+        let name = x.key;
         x.tooltip = {
-          trigger: 'item',
+          trigger: "item",
           formatter: `{a} <br/>{b} : ${name}<br/>Value: {c} ({d}%)`
-        }
-      })
-      pie.series[0].data = series
-      
-      cloud.series[0].data = res.resCloud.data
+        };
+      });
+      pie.series[0].data = series;
+
+      cloud.series[0].data = res.resCloud.data;
 
       cloud.series[0].textStyle.normal.color = function() {
         var colors = [
@@ -350,34 +353,49 @@ export default {
         ];
         return colors[parseInt(Math.random() * 10)];
       };
-      recurTree(res.treeNodes.data)
+      let tree = JSON.parse(JSON.stringify(res.treeNodes.data));
+      recurTree(tree);
+      res.fundRank.data.map(x => {
+        x._money = "$" + x._money;
+      });
       let result = {
         statistic: res.statistic,
         fundRank: res.fundRank,
         resPie: pie,
         resCloud: cloud,
-        treeNodes: res.treeNodes
-      }
+        treeNodes: tree
+      };
       cb(result);
     });
   },
   setRank(cb, activeAmount) {
     request({
-      url: "/api/rank/search/" + activeAmount,
+      url: "api/search/rank/" + activeAmount,
       method: "get"
     }).then(response => {
-      let res = response.data;
+      let res = response.data.data;
+      // console.log("rank data:", res);
+      if (activeAmount === "amount") {
+        res.data.map(x => {
+          x._money = "$" + x._money;
+        });
+      } else {
+        res.data.map(x => {
+          x._money = x._money + "%";
+        });
+      }
       //   // console.log("setRank(cb, activeAmount):", res);
       cb(res);
     });
   },
   setTech(cb, activeTech) {
     request({
-      url: "/api/tech/search/" + activeTech,
+      url: "api/search/tech/" + activeTech,
       method: "get"
     }).then(response => {
-      let res = response.data;
-      cb(res);
+      let tree = response.data.data.data;
+      recurTree(tree);
+      cb(tree);
     });
   }
 };

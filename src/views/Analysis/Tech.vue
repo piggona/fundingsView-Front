@@ -54,7 +54,6 @@
         :chartTwoTab="'投资趋势'"
       />
     </div>
-
   </div>
 </template>
 
@@ -77,12 +76,12 @@ export default {
     };
   },
   mounted() {
-    let uuid = this.uuid
-    this.$store.dispatch("tech/getTitle", uuid,);
-    this.$store.dispatch("tech/getResTech",uuid);
-    this.$store.dispatch("tech/getResCategory",uuid);
-    this.$store.dispatch("tech/getResOrg",uuid);
-    this.$store.dispatch("tech/getResIndustry",uuid);
+    let uuid = this.uuid;
+    this.$store.dispatch("tech/getTitle", uuid);
+    this.$store.dispatch("tech/getResTech", uuid);
+    this.$store.dispatch("tech/getResCategory", uuid);
+    this.$store.dispatch("tech/getResOrg", uuid);
+    this.$store.dispatch("tech/getResIndustry", uuid);
   },
   computed: {
     ...mapState({
@@ -100,8 +99,8 @@ export default {
       if (JSON.stringify(this.resTech.ranklist) !== undefined) {
         result = JSON.parse(JSON.stringify(this.resTech.ranklist));
         result.map(x => {
-          x.href = "/analysis/fundings?uuid=" + x.uuid;
-          x.date = "$ "+x.date;
+          x.href = "/analysis/fundings?fund=" + x.uuid;
+          x.date = "$ " + x.date;
         });
       }
       // console.log("tech list: ")
@@ -114,7 +113,7 @@ export default {
         result = JSON.parse(JSON.stringify(this.resCategory.ranklist));
         result.map(x => {
           x.href = "/analysis/category?uuid=" + x.uuid;
-          x.date = "$ "+x.date;
+          x.date = "$ " + x.date;
         });
       }
       // console.log("category list: ")
@@ -128,7 +127,7 @@ export default {
         result = JSON.parse(JSON.stringify(this.resOrg.ranklist));
         result.map(x => {
           x.href = "/analysis/org?uuid=" + x.uuid;
-          x.date = "$ "+x.date;
+          x.date = "$ " + x.date;
         });
       }
       return result;
@@ -140,14 +139,13 @@ export default {
         result = JSON.parse(JSON.stringify(this.resIndustry.ranklist));
         result.map(x => {
           x.href = "/analysis/industry?uuid=" + x.uuid;
-          x.date = "$ "+x.date;
+          x.date = "$ " + x.date;
         });
       }
       return result;
     }
   },
-  methods: {
-  },
+  methods: {},
   components: {
     TitleSimple,
     DetailedChart
@@ -229,6 +227,7 @@ export default {
 #detail-full {
   height: 38rem;
   overflow: auto;
+  width: 480px;
 }
 .patent-name {
   font-size: 2rem;

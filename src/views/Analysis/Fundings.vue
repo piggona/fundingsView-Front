@@ -26,7 +26,11 @@
           :style="{ height: '100%' }"
         >
           <a-tab-pane tab="基金关键词" key="1">
-            <Graph :ChartStyle="chartStyle" :option="resWordtree" :dblclick_func="categoryFunc"/>
+            <Graph
+              :ChartStyle="chartStyle"
+              :option="resWordtree"
+              :dblclick_func="categoryFunc"
+            />
           </a-tab-pane>
           <a-tab-pane tab="基金承担机构" key="2">
             <Graph :ChartStyle="chartStyle" :option="resCoptree" />
@@ -64,7 +68,7 @@
         <a-list-item slot="renderItem" slot-scope="item, index">
           <!-- <a slot="actions">edit</a> -->
           <!-- 点击的链接 -->
-          <a :href="'fundings?uuid='+item.uuid" slot="actions">内容</a>
+          <a :href="'fundings?uuid=' + item.uuid" slot="actions">内容</a>
           <!-- 结束 -->
           <!-- 标题和解释 -->
           <a-list-item-meta :description="item.word">
@@ -103,13 +107,13 @@ export default {
       showLoadingMore: true,
       data: [],
       page: 0,
-      categoryFunc: function(params,_this){
+      categoryFunc: function(params, _this) {
         // console.log("categoryFunc log:")
         // console.log(params);
         _this.$router.push({
-          path: "/analysis/"+params.data.type,
-          query: {uuid:params.data.uuid}
-        })
+          path: "/analysis/" + params.data.type,
+          query: { uuid: params.data.uuid }
+        });
       }
     };
   },
@@ -118,11 +122,14 @@ export default {
     this.$store.dispatch("fund/getCoptree", this.uuid);
     this.$store.dispatch("fund/getWordtree", this.uuid);
     let _page = this.page;
-    let _uuid = this.$route.query.uuid;
-    this.getData(res => {
-      this.loading = false;
-      this.data = res;
-    },{_uuid, _page});
+    let _uuid = this.$route.query.fund;
+    this.getData(
+      res => {
+        this.loading = false;
+        this.data = res;
+      },
+      { _uuid, _page }
+    );
   },
   computed: {
     ...mapState({
@@ -131,18 +138,24 @@ export default {
       resWordtree: state => state.fund.resWordtree
     }),
     uuid() {
-      return this.$route.query.uuid;
+      return this.$route.query.fund;
     }
   },
   methods: {
-    getData(callback,{_uuid,_page}) {
+    getData(callback, { _uuid, _page }) {
       reqwest({
-        url: "api/fund/similar/"+_uuid+"/"+ _page,
+        url:
+          process.env.VUE_APP_BASE_API +
+          "api/fund/similar/" +
+          _uuid +
+          "/" +
+          _page,
         type: "json",
         method: "get",
         contentType: "application/json",
         success: res => {
-          let data = res.data;
+          let data = res.data.data;
+          // console.log(data);
           data.map(x => {
             let temp = x.keywords;
             let result = "";
@@ -158,18 +171,21 @@ export default {
     },
     onLoadMore() {
       this.loadingMore = true;
-      this.page++;
+      this.page += 10;
       let _page = this.page;
-      let _uuid = this.$route.query.uuid;
+      let _uuid = this.$route.query.fund;
       // console.log("_uuid: ");
       // console.log(_uuid)
-      this.getData(res => {
-        this.data = this.data.concat(res);
-        this.loadingMore = false;
-        this.$nextTick(() => {
-          window.dispatchEvent(new Event("resize"));
-        });
-      },{_uuid, _page});
+      this.getData(
+        res => {
+          this.data = this.data.concat(res);
+          this.loadingMore = false;
+          this.$nextTick(() => {
+            window.dispatchEvent(new Event("resize"));
+          });
+        },
+        { _uuid, _page }
+      );
     }
   },
   components: {
@@ -253,6 +269,7 @@ export default {
 #detail-full {
   height: 38rem;
   overflow: auto;
+  width: 480px;
 }
 .patent-name {
   font-size: 2rem;

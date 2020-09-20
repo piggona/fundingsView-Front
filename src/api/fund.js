@@ -14,7 +14,7 @@ var titleData = {
   },
   AwardAmount: "",
   Institution: [{ Name: "" }, { Name: "" }, { Name: "" }],
-  Investigator: [{ FullName: "" }, { FullName: "" }],
+  Investigator: [{ FullName: "" }, { FullName: "" }, { FullName: "" }],
   venue: "",
   description: {
     DETAILED_DESC: {
@@ -93,8 +93,7 @@ var CopTree = {
           }
         }
       ],
-      data: [
-      ]
+      data: []
     }
   ]
 };
@@ -169,11 +168,10 @@ var WordTree = {
           }
         }
       ],
-      data: [
-      ]
+      data: []
     }
   ]
-}
+};
 
 function formatCurrency(num) {
   //   num = num.toString().replace(/\$|\,/g, "");
@@ -191,7 +189,7 @@ function formatCurrency(num) {
   return "$" + ((sign ? "" : "-") + num + "." + cents);
 }
 
-import $ from "jquery";
+// import $ from "jquery";
 export default {
   getTitle(cb, uuid) {
     request({
@@ -199,13 +197,24 @@ export default {
       method: "get"
     }).then(response => {
       let res = response.data;
-      res = $.extend(true, titleData, res);
+      let data = JSON.parse(JSON.stringify(titleData));
       if (res) {
-        if (res["AwardAmount"]) {
-          res["AwardAmount"] = formatCurrency(res["AwardAmount"]);
+        data.AwardTitle = res.award_title;
+        data.AwardAmount = formatCurrency(res["award_amount"]);
+        data.description.DETAILED_DESC.plain = res["description"];
+        for (let i = 0; i < res.institution.length && i < 3; i++) {
+          data.Institution[i].Name = res.institution[i].name;
         }
+        for (let i = 0; i < res.investigator.length && i < 3; i++) {
+          data.Investigator[i].FullName =
+            res.investigator[i].firstname + " " + res.investigator[i].lastname;
+        }
+        data.Organization.Directorate.LongName =
+          res.organization[0].directorate;
+        data.Organization.Division.LongName = res.organization[0].division;
+        data.Organization.Code = res.organization[0].code;
       }
-      cb(res);
+      cb(data);
     });
   },
   getCoptree(cb, uuid) {
@@ -213,11 +222,11 @@ export default {
       url: "api/fund/cop/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data;
-      let cop = JSON.parse(JSON.stringify(CopTree))
+      let res = response.data.data;
+      let cop = JSON.parse(JSON.stringify(CopTree));
       res.data.map(x => {
-        cop.series[0].data.push(x)
-      })
+        cop.series[0].data.push(x);
+      });
 
       cb(cop);
     });
@@ -227,11 +236,11 @@ export default {
       url: "api/fund/word/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data;
-      let word = JSON.parse(JSON.stringify(WordTree))
+      let res = response.data.data;
+      let word = JSON.parse(JSON.stringify(WordTree));
       res.data.map(x => {
-        word.series[0].data.push(x)
-      })
+        word.series[0].data.push(x);
+      });
 
       cb(word);
     });
