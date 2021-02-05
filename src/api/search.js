@@ -326,6 +326,7 @@ export default {
       let pie = JSON.parse(JSON.stringify(resPie));
       let cloud = JSON.parse(JSON.stringify(resCloud));
 
+      console.log("res show:", res);
       pie.legend.data = res.resPie.legend;
       let series = res.resPie.series;
       series.map(x => {

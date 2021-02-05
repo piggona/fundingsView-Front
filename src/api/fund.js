@@ -124,26 +124,22 @@ var WordTree = {
       levels: [
         {
           itemStyle: {
-            normal: {
-              borderColor: "#777",
-              borderWidth: 0,
-              gapWidth: 1
-            }
+            borderColor: "#777",
+            borderWidth: 0,
+            gapWidth: 1
           },
           upperLabel: {
-            normal: {
-              show: false
-            }
+            show: false
           }
         },
         {
           itemStyle: {
-            normal: {
-              borderColor: "#555",
-              borderWidth: 5,
-              gapWidth: 1
-            },
-            emphasis: {
+            borderColor: "#555",
+            borderWidth: 5,
+            gapWidth: 1
+          },
+          emphasis: {
+            itemStyle: {
               borderColor: "#ddd"
             }
           }
@@ -151,20 +147,29 @@ var WordTree = {
         {
           colorSaturation: [0.35, 0.5],
           itemStyle: {
-            normal: {
-              borderWidth: 5,
-              gapWidth: 1,
-              borderColorSaturation: 0.6
-            }
+            borderWidth: 5,
+            gapWidth: 1,
+            borderColorSaturation: 0.6
           }
         },
         {
           itemStyle: {
-            normal: {
-              borderColor: "#566573",
-              borderWidth: 0,
-              gapWidth: 1
+            borderColor: "#555",
+            borderWidth: 5,
+            gapWidth: 1
+          },
+          emphasis: {
+            itemStyle: {
+              borderColor: "#ddd"
             }
+          }
+        },
+        {
+          colorSaturation: [0.35, 0.5],
+          itemStyle: {
+            borderWidth: 5,
+            gapWidth: 1,
+            borderColorSaturation: 0.6
           }
         }
       ],
@@ -172,6 +177,22 @@ var WordTree = {
     }
   ]
 };
+
+// function randColor() {
+//   return '#' +
+//           (function (color) {
+//               return (color += '0123456789abcdef'[Math.floor(Math.random() * 16)])
+//               && (color.length == 6) ? color : arguments.callee(color);
+//           })('')
+// }
+
+// function getColor(num) {
+//   var colorList = [];
+//   for (var i = 0; i < num; i++) {
+//       colorList.push(randColor());
+//   }
+//   return colorList;
+// }
 
 function formatCurrency(num) {
   //   num = num.toString().replace(/\$|\,/g, "");
@@ -197,11 +218,12 @@ export default {
       method: "get"
     }).then(response => {
       let res = response.data;
+      console.log("detail data:", res);
       let data = JSON.parse(JSON.stringify(titleData));
       if (res) {
         data.AwardTitle = res.award_title;
         data.AwardAmount = formatCurrency(res["award_amount"]);
-        data.description.DETAILED_DESC.plain = res["description"];
+        data.description = res["description"];
         for (let i = 0; i < res.institution.length && i < 3; i++) {
           data.Institution[i].Name = res.institution[i].name;
         }
@@ -210,8 +232,9 @@ export default {
             res.investigator[i].firstname + " " + res.investigator[i].lastname;
         }
         data.Organization.Directorate.LongName =
-          res.organization[0].directorate;
-        data.Organization.Division.LongName = res.organization[0].division;
+          res.organization[0].directorate.longname;
+        data.Organization.Division.LongName =
+          res.organization[0].division.longname;
         data.Organization.Code = res.organization[0].code;
       }
       cb(data);
@@ -222,7 +245,7 @@ export default {
       url: "api/fund/cop/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data.data;
+      let res = response.data;
       let cop = JSON.parse(JSON.stringify(CopTree));
       res.data.map(x => {
         cop.series[0].data.push(x);
@@ -236,7 +259,7 @@ export default {
       url: "api/fund/word/" + uuid,
       method: "get"
     }).then(response => {
-      let res = response.data.data;
+      let res = response.data;
       let word = JSON.parse(JSON.stringify(WordTree));
       res.data.map(x => {
         word.series[0].data.push(x);

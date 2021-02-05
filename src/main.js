@@ -25,8 +25,10 @@ import {
   List,
   Spin,
   Tree,
-  Tag
+  Tag,
+  Form
 } from "ant-design-vue";
+import { Icon as AIcon } from "ant-design-vue";
 
 Vue.config.productionTip = false;
 
@@ -51,6 +53,9 @@ Vue.use(Popover);
 Vue.use(Steps);
 Vue.use(Statistic);
 Vue.use(Tree);
+Vue.use(Form);
+Vue.use(AIcon);
+
 Vue.component("v-icon", Icon);
 
 new Vue({

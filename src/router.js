@@ -29,6 +29,19 @@ const router = new Router({
       ]
     },
     {
+      path: "/user",
+      component: () =>
+        import(/* webpackChunkName: "patent" */ "./layout/BasicLayout"),
+      children: [
+        {
+          path: "/user/login",
+          name: "login",
+          component: () =>
+            import(/* webpackChunkName: "patent" */ "./views/User/Login")
+        }
+      ]
+    },
+    {
       path: "/",
       component: () =>
         import(/* webpackChunkName: "patent" */ "./layout/BasicLayout"),
@@ -52,7 +65,7 @@ const router = new Router({
             {
               path: "/analysis/category",
               name: "categoryAnalysis",
-              component: () => 
+              component: () =>
                 import(
                   /* webpackChunkName: "patent" */ "./views/Analysis/Category"
                 )
@@ -60,23 +73,19 @@ const router = new Router({
             {
               path: "/analysis/tech",
               name: "techAnalysis",
-              component: () => 
-                import(
-                  /* webpackChunkName: "patent" */ "./views/Analysis/Tech"
-                )
+              component: () =>
+                import(/* webpackChunkName: "patent" */ "./views/Analysis/Tech")
             },
             {
               path: "/analysis/org",
               name: "techAnalysis",
-              component: () => 
-                import(
-                  /* webpackChunkName: "patent" */ "./views/Analysis/Org"
-                )
+              component: () =>
+                import(/* webpackChunkName: "patent" */ "./views/Analysis/Org")
             },
             {
               path: "/analysis/industry",
               name: "techAnalysis",
-              component: () => 
+              component: () =>
                 import(
                   /* webpackChunkName: "patent" */ "./views/Analysis/Industry"
                 )
